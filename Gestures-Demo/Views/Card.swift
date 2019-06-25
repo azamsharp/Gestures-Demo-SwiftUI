@@ -12,6 +12,8 @@ import SwiftUI
 struct Card: View {           
     
     @Binding var tapped: Bool
+
+    // Something got changed...
     
     var body: some View {
         
