@@ -1,0 +1,100 @@
+
+//
+//  ContentView.swift
+//  Gestures-Demo
+//
+//  Created by Mohammad Azam on 6/23/19.
+//  Copyright © 2019 Mohammad Azam. All rights reserved.
+//
+
+import SwiftUI
+
+struct ContentView : View {
+
+@State private var tapped: Bool = false
+@State private var draggedOffset = CGSize.zero
+
+var body: some View {
+Card(tapped: $tapped)
+.animation(.spring())
+.offset(y: draggedOffset.height)
+.gesture(DragGesture()
+.onChanged { value in
+self.draggedOffset = value.translation
+}
+.onEnded { value in
+self.draggedOffset = CGSize.zero
+}
+)
+.gesture(TapGesture(count: 1)
+.onEnded({ () in
+self.tapped.toggle()
+})
+
+)
+}
+}
+
+#if DEBUG
+struct ContentView_Previews : PreviewProvider {
+static var previews: some View {
+ContentView()
+}
+}
+#endif
+
+
+
+
+
+//
+//  ContentView.swift
+//  Gestures-Demo
+//
+//  Created by Mohammad Azam on 6/23/19.
+//  Copyright © 2019 Mohammad Azam. All rights reserved.
+//
+
+import SwiftUI
+
+struct ContentView : View {
+
+@State private var tapped: Bool = false
+@State private var draggedOffset = CGSize.zero
+
+var body: some View {
+ZStack {
+CardBack()
+.gesture(DragGesture()
+.onChanged { value in
+}
+)
+
+
+CardBack()
+.animation(.spring())
+.offset(y: self.draggedOffset.height == 0 ? 40 : self.draggedOffset.height)
+.gesture(DragGesture()
+.onChanged { value in
+print(value.translation.height)
+self.draggedOffset = value.translation
+}
+.onEnded { value in
+self.draggedOffset = CGSize.zero
+}
+)
+
+}   .padding(.top, 20)
+.background(Color.black)
+
+}
+}
+
+#if DEBUG
+struct ContentView_Previews : PreviewProvider {
+static var previews: some View {
+ContentView()
+}
+}
+#endif
+
